@@ -4,6 +4,7 @@
   "description": "My solutions for AoC 2023 in TypeScript. See repository root README for instructions on how to supply inputs.",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
