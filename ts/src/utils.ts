@@ -212,6 +212,8 @@ declare global {
     sortDescending(): Array<T>;
     sum(): number;
     product(): number;
+    lcm(): number;
+    gcd(): number;
     take(n: number): Array<T>;
     chunks<T>(n: number): Array<Array<T>>;
     groupBy<T>(pred: (x: T) => boolean): Array<Array<T>>;
@@ -238,6 +240,44 @@ Array.prototype.sum = function () {
 Array.prototype.product = function () {
   return this.reduce((prev: number, cur: number) => prev * cur, 1);
 };
+
+Array.prototype.gcd = function () {
+  if(this.length === 0) {
+    return -1
+  }
+
+  if(this.length < 2) {
+    return this[0]
+  }
+
+  const _gcd = (a: number, b: number) => {
+    while(b !== 0) {
+      const t = b
+      b = a % b
+      a = t
+    }
+
+    return a
+  }
+
+  return this.slice(1).reduce((prev: number, cur: number) => _gcd(prev, cur), this[0])
+}
+
+Array.prototype.lcm = function () {
+  if(this.length === 0) {
+    return -1
+  }
+
+  if(this.length < 2) {
+    return this[0]
+  }
+
+  const _lcm = (a: number, b:number) => {
+    return Math.abs(a) * (Math.abs(b) / [a,b].gcd())
+  }
+
+  return this.slice(1).reduce((prev: number, cur: number) => _lcm(prev, cur), this[0])
+}
 
 Array.prototype.groupBy = function <T>(pred: (x: T) => boolean) {
   if (this.length < 1) {
